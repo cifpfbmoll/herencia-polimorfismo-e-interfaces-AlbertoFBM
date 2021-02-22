@@ -7,19 +7,19 @@ package eu.cifpfbmoll.biblioteca_2;
 
 import java.util.ArrayList;
 
+
 /**
  *
  * @author asix
  */
 public class Usuario extends Persona{
-    
     // Atributos de Usuario, aparte de los de Persona
     private int telefono;
     private String direccion;
     private int codigoPostal;
     private String correo;
     private ArrayList Reservas = new ArrayList();
-    
+    //private int librosReservados;
     // Constructor vacío
 
     public Usuario() {
@@ -92,7 +92,31 @@ public class Usuario extends Persona{
         return super.toString() + "Usuario{" + "telefono=" + telefono + ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + ", correo=" + correo + ", Reservas=" + Reservas + '}';
     
     }
+    
+    // MÉTODOS
 
+    
+    public void solicitarDatosPersona() {
+        
+        super.solicitarDatosPersona(); 
+        
+        System.out.println("Pon tu número de teléfono:");
+        this.setTelefono(lector.nextInt());
+        lector.nextLine();
+        
+        System.out.println("Pon tu dirección:");
+        this.setDireccion(lector.nextLine());
+        
+        System.out.println("Pon el número postal:");
+        this.setCodigoPostal(lector.nextInt());
+        lector.nextLine();
+        
+        System.out.println("Pon tu correo electrónico:");
+        this.setCorreo(lector.nextLine());
+        
+    }
+    
+    
     
     
     

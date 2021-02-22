@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @author asix
  */
 public class Persona {
-    Scanner lector = new Scanner(System.in);
+    public static Scanner lector = new Scanner(System.in);
     // Atributos de Persona
     private String nombre;
     private String apellido1;
@@ -82,7 +82,7 @@ public class Persona {
     
     // Métodos
     
-    public Persona solicitarDatosPersona(ArrayList<Persona> listaPersonas){
+    public void solicitarDatosPersona(){
         Persona persona1 = new Persona();
         
         System.out.println("Dime tu nombre:");
@@ -97,8 +97,6 @@ public class Persona {
         System.out.println("Edad:");
         persona1.setEdad(lector.nextInt());
         lector.nextLine();
-        
-        return persona1;
         
     }
 }

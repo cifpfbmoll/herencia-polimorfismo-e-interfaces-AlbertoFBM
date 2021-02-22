@@ -71,4 +71,21 @@ public class Bibliotecario extends Persona{
         return "Bibliotecario{" + "puestoTrabajo=" + puestoTrabajo + ", NIF=" + NIF + ", contrase\u00f1a=" + contraseña + '}';
     }
     
+    // MÉTODOS
+
+    @Override
+    public void solicitarDatosPersona() {
+        super.solicitarDatosPersona(); 
+        
+        System.out.println("Qué puesto de trabajo tienes?");
+        this.setPuestoTrabajo(lector.nextLine());
+        
+        System.out.println("Escriba su NIF:");
+        this.setNIF(lector.nextLine());
+        
+        System.out.println("Escriba su contraseña:");
+        this.setContraseña(lector.nextLine());
+    }
+    
+    
 }
