@@ -33,12 +33,66 @@ public class Main {
     }    
     
     public static void inicioSesion(Biblioteca biblioteca){
-        System.out.println("Inicia sesión como Administrador o como Usuario:");
-        System.out.println("             1. Administrador"                   );
-        System.out.println("             2. Usuario"                         );
+        System.out.println("------------------------------------------------------------------");
+        System.out.println("   Bienvenido al menú de " + biblioteca.getNombreBiblioteca()      );
+        System.out.println("------------------------------------------------------------------");
+        System.out.println("       Inicia sesión como Administrador o como Usuario:"           );
+        System.out.println("                      1. Administrador"                            );
+        System.out.println("                      2. Usuario"                                  );
+        int opcion = lector.nextInt();  
+        lector.nextLine();
+        
+        int menu = 1;
+        while(menu != 0) {
+            switch (opcion) {
+            case 1:
+                gestionarAdministrador(biblioteca);
+                break;
+            case 2:
+                //gestionarUsuario();
+                break;
+            default:
+                System.out.println("Pon una opción correcta:");
+                opcion = lector.nextInt();
+                lector.nextLine();
+            }
+        }
+        
+    }
+    
+    public static void gestionarAdministrador(Biblioteca biblioteca){
+        System.out.println("------------------------------------------------------------------");
+        System.out.println("      Has iniciado sesión como Administrador/Bibliotecario"        );
+        System.out.println("------------------------------------------------------------------");
+        System.out.println("                   1. Gestionar reservas"                          );
+        System.out.println("                   2. Gestionar bibliotecarios"                    );
+        System.out.println("                   3. Gestionar usuarios"                     );
+        System.out.println("                   0. Salir de esta sesión"                        );
+        System.out.println("------------------------------------------------------------------");
+        int opcion = lector.nextInt();
+        lector.nextLine();
+        
+        int menu = 1;
+        while(menu != 0){
+            switch (opcion) {
+            case 1:
+                mostrarMenuReservas(biblioteca);
+                break;
+            case 2:
+                //crearAdministrador(biblioteca);
+                break;
+            case 3:
+                //crearUsuario(biblioteca);
+                break;
+                
+            default:
+                System.out.println("Pon una opción correcta:");
+                opcion = lector.nextInt();
+                lector.nextLine();
+            }  
+        }  
     }
     public static void mostrarMenuBiblioteca(Biblioteca biblioteca){
-
         int menu = 1;
         while(menu != 0){
             System.out.println("------------------------------------------------------------------");
@@ -159,11 +213,11 @@ public class Main {
             System.out.println("----------------------------------------------------------------------------------");
             System.out.println("Bienvenido al menú de los usuarios de la Biblioteca del Francesc de Borja Moll !!!");
             System.out.println("----------------------------------------------------------------------------------");
-            System.out.println("                           1. Añadir usuario"                                      );
-            System.out.println("                           2. Encontrar y eliminar usuario"                        );
-            System.out.println("                           3. Reservar libros"                                     );
-            System.out.println("                           4. Mostrar usuarios"                                    );
-            System.out.println("                           5. Volver al menú anterior"                             );
+            System.out.println("                         1. Añadir usuario"                                        );
+            System.out.println("                         2. Encontrar y eliminar usuario"                          );
+            System.out.println("                         3. Reservar libros"                                       );
+            System.out.println("                         4. Mostrar todos los usuarios de la biblioteca"           );
+            System.out.println("                         5. Volver al menú anterior"                               );
             System.out.println("----------------------------------------------------------------------------------");
          
             int opcion = lector.nextInt();
