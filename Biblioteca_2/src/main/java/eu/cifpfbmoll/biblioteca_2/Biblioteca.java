@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author Alberto
  */
 public class Biblioteca {
+    public static Scanner lector = new Scanner(System.in);
     // Atributos de la Biblioteca
     private String nombreBiblioteca;    
     private ArrayList<Libro> listaLibros = new ArrayList();
@@ -43,6 +44,10 @@ public class Biblioteca {
     }
 
     public void setNombreBiblioteca(String nombreBiblioteca) {
+        while((Character.getType(nombreBiblioteca.charAt(0)))!=1){
+            System.out.println("El nombre de la Biblioteca debe esta en mayúscula:");
+            nombreBiblioteca = lector.nextLine();
+        }
         this.nombreBiblioteca = nombreBiblioteca;
     }
     //

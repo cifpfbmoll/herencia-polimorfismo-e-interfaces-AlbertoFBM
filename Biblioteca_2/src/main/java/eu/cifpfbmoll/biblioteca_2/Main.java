@@ -12,27 +12,37 @@ import java.util.Scanner;
  * @author asix
  */
 public class Main {
-    public static Scanner lectorMenu = new Scanner(System.in);
+    public static Scanner lector = new Scanner(System.in);
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        crearBiblioteca();
-        mostrarMenuBiblioteca();
+        Biblioteca biblioteca = crearBiblioteca();
+        inicioSesion(biblioteca);
+        mostrarMenuBiblioteca(biblioteca);
     }
     
     public static Biblioteca crearBiblioteca(){
-        Biblioteca biblioteca = new Biblioteca();
+        
+        System.out.println("Como se llamará tu Biblioteca?");
+        String nombreBiblioteca = lector.nextLine();
+        Biblioteca biblioteca = new Biblioteca(nombreBiblioteca);
         
         return biblioteca;
     }    
-    public static void mostrarMenuBiblioteca(){
+    
+    public static void inicioSesion(Biblioteca biblioteca){
+        System.out.println("Inicia sesión como Administrador o como Usuario:");
+        System.out.println("             1. Administrador"                   );
+        System.out.println("             2. Usuario"                         );
+    }
+    public static void mostrarMenuBiblioteca(Biblioteca biblioteca){
 
-        boolean menu = false;
-        while(!menu){
+        int menu = 1;
+        while(menu != 0){
             System.out.println("------------------------------------------------------------------");
-            System.out.println("Bienvenido al menú de la Biblioteca del Francesc de Borja Moll !!!");
+            System.out.println("Bienvenido al menú de " + biblioteca.getNombreBiblioteca());
             System.out.println("------------------------------------------------------------------");
             System.out.println("                   En qué menú quieres entrar?"                    );
             System.out.println("                   1.- Menú de reservas."                          );
@@ -41,28 +51,27 @@ public class Main {
             System.out.println("                   4.- Salir."                                     );
             System.out.println("------------------------------------------------------------------");
         
-            int opcion = lectorMenu.nextInt();
-            lectorMenu.nextLine();
+            int opcion = lector.nextInt();
+            lector.nextLine();
             switch(opcion){
                 case 1:
-                    mostrarMenuReservas();
+                    mostrarMenuReservas(biblioteca);
                     break;
                 case 2:
-                    mostrarMenuPersonal();
+                    mostrarMenuPersonal(biblioteca);
                     break;
                 case 3:
-                    mostrarMenuUsuarios();
+                    mostrarMenuUsuarios(biblioteca);
                     break;
                 case 4:
                     System.out.println("------------------------------------------------------------------");
                     System.out.println("                             Adiós"                                );
-                    menu = true;
+                    menu = 0;
                     break;
             }
         }  
     }
-    public static void mostrarMenuReservas(){
-        Scanner lectorMenuReservas = new Scanner(System.in);
+   public static void mostrarMenuReservas(Biblioteca biblioteca){
         Biblioteca objetoBiblioteca = new Biblioteca("Libreria");
         boolean menuReservas = false;
         while(!menuReservas){
@@ -76,8 +85,8 @@ public class Main {
             System.out.println("                   7.- Volver al menú anterior"                    );
             System.out.println("------------------------------------------------------------------");
         
-            int opcion = lectorMenuReservas.nextInt();
-            lectorMenuReservas.nextLine();
+            int opcion = lector.nextInt();
+            lector.nextLine();
             switch (opcion) {
                 case 1:
                     Libro.añadirLibro(objetoBiblioteca.getListaLibros());
@@ -99,7 +108,7 @@ public class Main {
                     objetoBiblioteca.mostrarLibrosDisponibles();
                     break;
                 case 7:
-                    mostrarMenuBiblioteca();
+                    mostrarMenuBiblioteca(biblioteca);
                     break;
                 default:
                     System.out.println(" El número " + opcion + " no está disponible");
@@ -107,8 +116,7 @@ public class Main {
             }
         }
     }
-    public static void mostrarMenuPersonal(){
-        Scanner lectorMenuPersonal = new Scanner(System.in);
+    public static void mostrarMenuPersonal(Biblioteca biblioteca){
         Biblioteca bibliotecarios = new Biblioteca("Trabajadores");
         boolean menuPersonal = false;
         while(!menuPersonal){
@@ -121,8 +129,8 @@ public class Main {
             System.out.println("                             4. Volver al menú anterior"                               );
             System.out.println("--------------------------------------------------------------------------------------");
             
-            int opcion = lectorMenuPersonal.nextInt();
-            lectorMenuPersonal.nextLine();
+            int opcion = lector.nextInt();
+            lector.nextLine();
             
             switch(opcion) {
                 case 1:
@@ -135,7 +143,7 @@ public class Main {
                     //Persona.mostrarPersonal(bibliotecarios.getListaPersonal());
                     break;
                 case 4:
-                    mostrarMenuBiblioteca();
+                    mostrarMenuBiblioteca(biblioteca);
                     break;
                 default:
                     System.out.println(" El número " + opcion + " no está disponible");
@@ -144,8 +152,7 @@ public class Main {
         }
     }
     
-    public static void mostrarMenuUsuarios(){
-        Scanner lectorMenuUsuarios = new Scanner(System.in);
+    public static void mostrarMenuUsuarios(Biblioteca biblioteca){
         Biblioteca usuarios = new Biblioteca("Usuarios");
         boolean menu_usuarios = false;
         while(!menu_usuarios){
@@ -159,8 +166,8 @@ public class Main {
             System.out.println("                           5. Volver al menú anterior"                             );
             System.out.println("----------------------------------------------------------------------------------");
          
-            int opcion = lectorMenuUsuarios.nextInt();
-            lectorMenuUsuarios.nextLine();
+            int opcion = lector.nextInt();
+            lector.nextLine();
         
             switch (opcion) {
                 case 1:
@@ -176,13 +183,14 @@ public class Main {
                     //Usuario.mostrarUsuarios(usuarios.getListaUsuarios());
                     break;
                 case 5:
-                    mostrarMenuBiblioteca();
+                    mostrarMenuBiblioteca(biblioteca);
                     break;
                 default:
                     System.out.println("El número " + opcion + " no está disponible");
             }
         }
     }
+
 
     
 }
