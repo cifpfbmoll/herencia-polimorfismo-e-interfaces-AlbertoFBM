@@ -18,7 +18,7 @@ public class Usuario extends Persona{
     private String direccion;
     private int codigoPostal;
     private String correo;
-    private ArrayList Reservas = new ArrayList();
+    private ArrayList<Reserva> listaReservas = new ArrayList();
     //private int librosReservados;
     // Constructor vacío
 
@@ -26,21 +26,24 @@ public class Usuario extends Persona{
     }
     
     // Constructor con todos los parámetros, incluidos los de Persona
-    
-    public Usuario(int telefono, String direccion, int codigoPostal, String correo, String nombre, String apellido1, String apellido2, int edad) {
+
+    public Usuario(int telefono, String direccion, int codigoPostal, String correo, String nombre, String apellido1, String apellido2, int edad, ArrayList<Reserva> listaReservas) {
         super(nombre, apellido1, apellido2, edad);
         this.telefono = telefono;
         this.direccion = direccion;
         this.codigoPostal = codigoPostal;
         this.correo = correo;
+        this.listaReservas = listaReservas;
     }
+    
+    
 
     public Usuario(Usuario copiaUsuario){
        this.setTelefono(copiaUsuario.getTelefono());
        this.setDireccion(copiaUsuario.getDireccion());
        this.setCodigoPostal(copiaUsuario.getCodigoPostal());
        this.setCorreo(copiaUsuario.getCorreo());
-       this.setReservas(copiaUsuario.getReservas());
+       this.setListaReservas(copiaUsuario.getListaReservas());
     }
     
     // Getters / Setters
@@ -77,19 +80,19 @@ public class Usuario extends Persona{
         this.correo = correo;
     }
 
-    public ArrayList getReservas() {
-        return Reservas;
+    public ArrayList<Reserva> getListaReservas() {
+        return listaReservas;
     }
 
-    public void setReservas(ArrayList Reservas) {
-        this.Reservas = Reservas;
+    public void setListaReservas(ArrayList<Reserva> listaReservas) {
+        this.listaReservas = listaReservas;
     }
     
     // To String
     
     @Override
     public String toString() {
-        return super.toString() + "Usuario{" + "telefono=" + telefono + ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + ", correo=" + correo + ", Reservas=" + Reservas + '}';
+        return super.toString() + "Usuario{" + "telefono=" + telefono + ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + ", correo=" + correo + ", Reservas=" + listaReservas + '}';
     
     }
     
