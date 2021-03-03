@@ -21,8 +21,10 @@ public class Main {
         // TODO code application logic here
         Biblioteca biblioteca = crearBiblioteca();
         inicializarBiblioteca(biblioteca);
+        System.out.println("Vamos a crear un primer administrador para gestionar la Biblioteca.");
+        crearAdministrador(biblioteca);
         inicioSesion(biblioteca);
-        mostrarMenuBiblioteca(biblioteca);
+        //mostrarMenuBiblioteca(biblioteca);
     }
     
     public static Biblioteca crearBiblioteca(){
@@ -35,33 +37,53 @@ public class Main {
     }    
     
     public static void inicioSesion(Biblioteca biblioteca){
+        int posicion = 0;
         System.out.println("------------------------------------------------------------------");
         System.out.println("   Bienvenido al menú de " + biblioteca.getNombreBiblioteca()      );
         System.out.println("------------------------------------------------------------------");
         System.out.println("       Inicia sesión como Administrador o como Usuario:"           );
         System.out.println("                      1. Administrador"                            );
         System.out.println("                      2. Usuario"                                  );
+        System.out.println("------------------------------------------------------------------");
         byte opcion = lector.nextByte();
         
-        int menu = 1;
-        while(menu != 0) {
-            switch (opcion) {
+        switch (opcion) {
             case 1:
-                gestionarAdministrador(biblioteca);
+                posicion = Bibliotecario.comprobarSesionAdministrador(biblioteca);
+                if(posicion == 0){
+                    System.out.println("Bibliotecario no logueado.");
+                    inicioSesion(biblioteca);
+                }
+                menuAdministrador(biblioteca);
                 break;
             case 2:
-                //gestionarUsuario();
+                posicion = Usuario.comprobarSesionUsuario(biblioteca);
+                if(posicion == 0){
+                    System.out.println("Usuario no logueado.");
+                    inicioSesion(biblioteca);
+                }
+                menuUsuarios(biblioteca);
                 break;
             default:
                 System.out.println("Pon una opción correcta:");
                 opcion = lector.nextByte();
                 break;
-            }
-        }
-        
+        }   
+    }
+
+    public static void crearAdministrador(Biblioteca biblioteca){
+        Bibliotecario B1 = new Bibliotecario();
+        B1.solicitarDatosPersona();
+        biblioteca.getListaPersonal().add(B1);
     }
     
-    public static void gestionarAdministrador(Biblioteca biblioteca){
+    public static void crearUsuario(Biblioteca biblioteca){
+        Usuario U1 = new Usuario();
+        U1.solicitarDatosPersona();
+        biblioteca.getListaUsuarios().add(U1);
+    }
+    
+    public static void menuAdministrador(Biblioteca biblioteca){
         System.out.println("------------------------------------------------------------------");
         System.out.println("      Has iniciado sesión como Administrador/Bibliotecario"        );
         System.out.println("------------------------------------------------------------------");
@@ -72,70 +94,41 @@ public class Main {
         System.out.println("------------------------------------------------------------------");
         byte opcion = lector.nextByte();
         
-        int menu = 1;
-        while(menu != 0){
-            switch (opcion) {
+        switch(opcion) {
             case 1:
-                mostrarMenuReservas(biblioteca);
+                gestionarReservas(biblioteca);
                 break;
             case 2:
-                //crearAdministrador(biblioteca);
+                gestionarPersonal(biblioteca);
                 break;
             case 3:
-                //crearUsuario(biblioteca);
+                gestionarUsuarios(biblioteca);
                 break;
             case 4:
                 inicioSesion(biblioteca);
+                break;
             default:
                 System.out.println("Pon una opción correcta:");
                 opcion = lector.nextByte();
-            }  
-        }
-    }
-    public static void mostrarMenuBiblioteca(Biblioteca biblioteca){
-        int menu = 1;
-        while(menu != 0){
-            System.out.println("------------------------------------------------------------------");
-            System.out.println("Bienvenido al menú de " + biblioteca.getNombreBiblioteca());
-            System.out.println("------------------------------------------------------------------");
-            System.out.println("                   En qué menú quieres entrar?"                    );
-            System.out.println("                   1.- Menú de reservas."                          );
-            System.out.println("                   2.- Menú del personal."                         );
-            System.out.println("                   3.- Menú de usuarios."                          );
-            System.out.println("                   4.- Salir."                                     );
-            System.out.println("------------------------------------------------------------------");
-        
-            byte opcion = lector.nextByte();
-            switch(opcion){
-                case 1:
-                    mostrarMenuReservas(biblioteca);
-                    break;
-                case 2:
-                    mostrarMenuPersonal(biblioteca);
-                    break;
-                case 3:
-                    mostrarMenuUsuarios(biblioteca);
-                    break;
-                case 4:
-                    System.out.println("------------------------------------------------------------------");
-                    System.out.println("                             Adiós"                                );
-                    menu = 0;
-                    break;
-            }
         }  
     }
-   public static void mostrarMenuReservas(Biblioteca biblioteca){
+    
+   public static void gestionarReservas(Biblioteca biblioteca){
         boolean menuReservas = false;
         while(!menuReservas){
-            System.out.println("------------------------------------------------------------------");
-            System.out.println("                   1.- Añadir libros"                              );
-            System.out.println("                   2.- Eliminar libro"                             );
-            System.out.println("                   3.- Buscar libro por ISBN"                      );
-            System.out.println("                   4.- Buscar libro por título"                    );
-            System.out.println("                   5.- Mostrar todos los libros de la Biblioteca"  );
-            System.out.println("                   6.- Mostrar solo los libros disponibles"        );
-            System.out.println("                   7.- Volver al menú anterior"                    );
-            System.out.println("------------------------------------------------------------------");
+            System.out.println("-----------------------------------------------------------------");
+            System.out.println("        En este menú se gestionan los libros de " + biblioteca.getNombreBiblioteca());
+            System.out.println("-----------------------------------------------------------------");
+            System.out.println("                 1. Añadir libros"                                );
+            System.out.println("                 2. Eliminar libro"                               );
+            System.out.println("                 3. Buscar libro por ISBN"                        );
+            System.out.println("                 4. Buscar libro por título"                      );
+            System.out.println("                 5. Mostrar todos los libros de la Biblioteca"    );
+            System.out.println("                 6. Mostrar solo los libros disponibles"          );
+            System.out.println("                 7. Reservar libro"                               );
+            System.out.println("                 8. Devolver libro"                               );
+            System.out.println("                 9. Volver al menú anterior"                      );
+            System.out.println("-----------------------------------------------------------------");
         
             byte opcion = lector.nextByte();
             
@@ -160,54 +153,57 @@ public class Main {
                     biblioteca.mostrarLibrosDisponibles();
                     break;
                 case 7:
-                    mostrarMenuBiblioteca(biblioteca);
+                    menuAdministrador(biblioteca);
                     break;
                 default:
-                    System.out.println(" El número " + opcion + " no está disponible");
+                    System.out.println("Pon una opción correcta:");
+                    opcion = lector.nextByte();
                     break;
             }
         }
     }
-    public static void mostrarMenuPersonal(Biblioteca biblioteca){
+    public static void gestionarPersonal(Biblioteca biblioteca){
         boolean menuPersonal = false;
         while(!menuPersonal){
-            System.out.println("--------------------------------------------------------------------------------------");
-            System.out.println("Bienvenido al menú de los trabajadores de la Biblioteca del Francesc de Borja Moll !!!");
-            System.out.println("--------------------------------------------------------------------------------------");
-            System.out.println("                             1. Añadir trabajador"                                     );
-            System.out.println("                             2. Encontrar y eliminar trabajador"                       );
-            System.out.println("                             3. Mostrar todo el personal de la biblioteca"             );
-            System.out.println("                             4. Volver al menú anterior"                               );
-            System.out.println("--------------------------------------------------------------------------------------");
+            System.out.println("------------------------------------------------------------------------------");
+            System.out.println("         En este menú se gestionan los trabajadores de " + biblioteca.getNombreBiblioteca());
+            System.out.println("------------------------------------------------------------------------------");
+            System.out.println("                     1. Añadir bibliotecario"                                  );
+            System.out.println("                     2. Encontrar y eliminar bibliotecario"                    );
+            System.out.println("                     3. Mostrar todo el personal de la biblioteca"             );
+            System.out.println("                     4. Volver al menú anterior"                               );
+            System.out.println("------------------------------------------------------------------------------");
             
             byte opcion = lector.nextByte();
             
             switch(opcion) {
                 case 1:
-                    //Persona.añadirTrabajador(biblioteca.getListaPersonal());
+                    Bibliotecario B1 = new Bibliotecario();
+                    B1.solicitarDatosPersona();
+                    biblioteca.getListaPersonal().add(B1);
                     break;
                 case 2:
-                    //Persona.eliminarTrabajador(biblioteca.getListaPersonal());
+                    Bibliotecario.eliminarBibliotecario(biblioteca.getListaPersonal());
                     break;
                 case 3:
-                    //Persona.mostrarPersonal(biblioteca.getListaPersonal());
+                    Bibliotecario.mostrarPersonal(biblioteca.getListaPersonal());
                     break;
                 case 4:
-                    mostrarMenuBiblioteca(biblioteca);
+                    menuAdministrador(biblioteca);
                     break;
                 default:
-                    System.out.println(" El número " + opcion + " no está disponible");
+                    System.out.println("Pon una opción correcta:");
+                    opcion = lector.nextByte();
                     break;
             }
         }
     }
     
-    public static void mostrarMenuUsuarios(Biblioteca biblioteca){
-        Biblioteca usuarios = new Biblioteca("Usuarios");
+    public static void gestionarUsuarios(Biblioteca biblioteca){
         boolean menu_usuarios = false;
         while(!menu_usuarios){
             System.out.println("----------------------------------------------------------------------------------");
-            System.out.println("Bienvenido al menú de los usuarios de la Biblioteca del Francesc de Borja Moll !!!");
+            System.out.println("         En este menú se gestionan los usuarios de " + biblioteca.getNombreBiblioteca());
             System.out.println("----------------------------------------------------------------------------------");
             System.out.println("                         1. Añadir usuario"                                        );
             System.out.println("                         2. Encontrar y eliminar usuario"                          );
@@ -220,22 +216,67 @@ public class Main {
         
             switch (opcion) {
                 case 1:
-                    //Usuario.crearUsuario(usuarios.getListaUsuarios());
+                    Usuario U1 = new Usuario();
+                    U1.solicitarDatosPersona();
+                    biblioteca.getListaPersonal().add(U1);
                     break;
                 case 2:
-                    //Usuario.eliminarUsuario(usuarios.getListaUsuarios());
+                    Persona.eliminarUsuario(biblioteca.getListaUsuarios());
                     break;
                 case 3:
-                    Biblioteca.reservarLibro(usuarios.getListaLibros());
+                    biblioteca.reservarLibro(biblioteca.getListaLibros());
                     break;
                 case 4:
-                    //Usuario.mostrarUsuarios(usuarios.getListaUsuarios());
+                    Usuario.mostrarUsuarios(biblioteca.getListaUsuarios());
                     break;
                 case 5:
-                    mostrarMenuBiblioteca(biblioteca);
+                    menuAdministrador(biblioteca);
                     break;
                 default:
-                    System.out.println("El número " + opcion + " no está disponible");
+                    System.out.println("Pon una opción correcta:");
+                    opcion = lector.nextByte();
+                    break;
+            }
+        }
+    }
+    public static void menuUsuarios(Biblioteca biblioteca){
+        boolean menuUsuarios = false;
+        while(!menuUsuarios){
+            System.out.println("------------------------------------------------------");
+            System.out.println("         Has iniciado sesión como Usuario"             );
+            System.out.println("------------------------------------------------------");
+            System.out.println("           1. Mostrar todos los libros"                );
+            System.out.println("           2. Mostrar los libros disponibles"          );
+            System.out.println("           3. Buscar un libro por su ISBN"             );
+            System.out.println("           4. Buscar un libro por su título"           );
+            System.out.println("           5. Mostrar libros reservados"               );
+            System.out.println("           6. Salir de esta sesión"                    );
+            System.out.println("------------------------------------------------------");
+            byte opcion = lector.nextByte();
+        
+            switch (opcion) {
+                case 1:
+                    biblioteca.mostrarLibros();
+                    break;
+                case 2:
+                    biblioteca.mostrarLibrosDisponibles();
+                    break;
+                case 3:
+                    Libro.buscarISBN(biblioteca.getListaLibros());
+                    break;
+                case 4:
+                    Libro.buscarTitulo(biblioteca.getListaLibros());
+                    break;
+                case 5:
+                    biblioteca.reservarLibro(biblioteca.getListaLibros());
+                    break;
+                case 6:
+                    inicioSesion(biblioteca);
+                    break;
+                default:
+                    System.out.println("Pon una opción correcta:");
+                    opcion = lector.nextByte();
+                    break;
             }
         }
     }
@@ -292,6 +333,5 @@ public class Main {
         
         return biblioteca;        
     }
-
-    
+  
 }

@@ -118,6 +118,45 @@ public class Usuario extends Persona{
         this.setCorreo(lector.nextLine());
         
     }
+    public static int comprobarSesionUsuario(Biblioteca biblioteca){
+        int posicion = 0;
+        boolean inicioSesion = false;
+        int i = 0;
+        
+        System.out.println("Inserta tu teléfono y tu correo para iniciar sesión como Usuario:");
+        System.out.println("Teléfono:");
+        int telefono = lector.nextInt();
+        lector.nextLine();
+        
+        System.out.println("Correo:");
+        String correo = lector.nextLine();
+        
+        while(i<biblioteca.getListaUsuarios().size() && !inicioSesion){
+            if(biblioteca.getListaUsuarios().get(i) instanceof Usuario){
+                if(((Usuario)biblioteca.getListaUsuarios().get(i)).getTelefono()==telefono
+                    && ((Usuario)biblioteca.getListaUsuarios().get(i)).getCorreo().equals(correo)){
+                    posicion = 1;
+                    System.out.println("Se realizó el inicio de sesión correctamente");
+                    inicioSesion = true;
+                    return posicion; 
+                }
+            }
+            i++;
+        }
+        if(!inicioSesion){
+            System.out.println("No hay ningún Usuario con esos datos, porfavor escríbalos de nuevo.");
+            posicion = 0;
+            return posicion;
+        }
+        return posicion;
+    }
+
+    public static void mostrarUsuarios(ArrayList<Usuario> listaUsuarios){
+        System.out.println("Estos son los usuarios que hay:");
+        for(int i=0; i<listaUsuarios.size(); i++){
+            System.out.println(listaUsuarios.get(i));
+        }
+    }
     
     
     

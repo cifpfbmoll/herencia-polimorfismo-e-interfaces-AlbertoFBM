@@ -83,20 +83,74 @@ public class Persona {
     // Métodos
     
     public void solicitarDatosPersona(){
-        Persona persona1 = new Persona();
         
         System.out.println("Dime tu nombre:");
-        persona1.setNombre(lector.nextLine());
+        this.setNombre(lector.nextLine());
         
         System.out.println("Primer apellido:");
-        persona1.setApellido1(lector.nextLine());
+        this.setApellido1(lector.nextLine());
         
         System.out.println("Segundo apellido:");
-        persona1.setApellido2(lector.nextLine());
+        this.setApellido2(lector.nextLine());
         
         System.out.println("Edad:");
-        persona1.setEdad(lector.nextInt());
+        this.setEdad(lector.nextInt());
         lector.nextLine();
         
+    }
+    
+    public static void eliminarBibliotecario(ArrayList<Persona> listaPersonal){
+        System.out.println("Vamos a encontrar y eliminar a una Bibliotecario");
+        System.out.println("Para ello escribe su nombre y sus apellidos");
+        boolean encontrado = false;
+        
+        System.out.println("Nombre:");
+        String nombre = lector.nextLine();
+        
+        System.out.println("Primer apellido:");
+        String apellido1 = lector.nextLine();
+        
+        System.out.println("Segundo apellido:");
+        String apellido2 = lector.nextLine();
+        
+        for(int i=0; i<listaPersonal.size(); i++){
+            if(listaPersonal.get(i).getNombre().equals(nombre) &&
+                listaPersonal.get(i).getApellido1().equals(apellido1) &&
+                listaPersonal.get(i).getApellido2().equals(apellido2)){
+                listaPersonal.remove(i);
+                encontrado = true;
+                System.out.println("Bibliotecario encontrado y eliminado. Bye Bye " +nombre);
+            } 
+        }
+        if(!encontrado){
+            System.out.println("No he encontrado a ese Bibliotecario, porfavor escriba otra vez sus datos.");
+        }
+    }
+    public static void eliminarUsuario(ArrayList<Usuario> listaUsuarios){
+        System.out.println("Vamos a encontrar y eliminar a un Usuario");
+        System.out.println("Para ello escribe su nombre y sus apellidos");
+        boolean encontrado = false;
+        
+        System.out.println("Nombre:");
+        String nombre = lector.nextLine();
+        
+        System.out.println("Primer apellido:");
+        String apellido1 = lector.nextLine();
+        
+        System.out.println("Segundo apellido:");
+        String apellido2 = lector.nextLine();
+        
+        for(int i=0; i<listaUsuarios.size(); i++){
+            if(listaUsuarios.get(i).getNombre().equals(nombre) &&
+                listaUsuarios.get(i).getApellido1().equals(apellido1) &&
+                listaUsuarios.get(i).getApellido2().equals(apellido2)){
+                listaUsuarios.remove(i);
+                encontrado = true;
+                System.out.println("Usuario encontrado y eliminado. Bye Bye " +nombre);
+            } 
+        }
+        if(!encontrado){
+            System.out.println("No he encontrado a ese Usuario, porfavor escriba otra vez sus datos.");
+        }
     }
 }

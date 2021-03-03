@@ -5,12 +5,15 @@
  */
 package eu.cifpfbmoll.biblioteca_2;
 
+import static eu.cifpfbmoll.biblioteca_2.Main.lector;
+import java.util.ArrayList;
+
+
 /**
  *
  * @author asix
  */
 public class Bibliotecario extends Persona{
-    
     // Atributos de Bibliotecario, a parte de los de Persona
     private String puestoTrabajo;
     private String NIF;
@@ -68,7 +71,7 @@ public class Bibliotecario extends Persona{
     
     @Override
     public String toString() {
-        return "Bibliotecario{" + "puestoTrabajo=" + puestoTrabajo + ", NIF=" + NIF + ", contrase\u00f1a=" + contraseña + '}';
+        return super.toString() +"Bibliotecario{" + "puestoTrabajo=" + puestoTrabajo + ", NIF=" + NIF + ", contrase\u00f1a=" + contraseña + '}';
     }
     
     // MÉTODOS
@@ -86,6 +89,41 @@ public class Bibliotecario extends Persona{
         System.out.println("Escriba su contraseña:");
         this.setContraseña(lector.nextLine());
     }
+    public static int comprobarSesionAdministrador(Biblioteca biblioteca){
+        int posicion = 0;
+        boolean inicioSesion = false;
+        int i = 0;
+        
+        System.out.println("Inserta tu NIF y contraseña para iniciar sesión como Aministrador:");
+        System.out.println("NIF:");
+        String NIF = lector.nextLine();
+        System.out.println("Contraseña de trabajador:");
+        String contraseña = lector.nextLine();
+        
+        while(i<biblioteca.getListaPersonal().size() && !inicioSesion){
+            if(biblioteca.getListaPersonal().get(i) instanceof Bibliotecario){
+                if(((Bibliotecario)biblioteca.getListaPersonal().get(i)).getContraseña().equals(contraseña) 
+                    && ((Bibliotecario)biblioteca.getListaPersonal().get(i)).getNIF().equals(NIF)){
+                    posicion = 1;
+                    System.out.println("Se realizó el inicio de sesión correctamente");
+                    inicioSesion = true;
+                    return posicion;
+                }
+            }
+            i++;
+        }
+        if(!inicioSesion){
+            System.out.println("No hay ningún Bibliotecario con esos datos, porfavor vuelvalo a intentar");
+            posicion = 0;
+        }
+        return posicion;
+        
+    }
     
-    
+    public static void mostrarPersonal(ArrayList<Persona> listaPersonal){
+        System.out.println("Estos son los Bibliotecarios que hay:");
+        for(int i=0;i<listaPersonal.size(); i++){
+            System.out.println(listaPersonal.get(i));
+        }
+    }
 }

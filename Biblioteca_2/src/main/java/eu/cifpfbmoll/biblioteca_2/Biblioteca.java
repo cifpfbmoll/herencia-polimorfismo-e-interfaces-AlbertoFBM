@@ -19,7 +19,7 @@ public class Biblioteca {
     private ArrayList<Libro> listaLibros = new ArrayList();
     private ArrayList<Persona> listaPersonal = new ArrayList();
     // añado un nuevo ArrayList<Usuario> para el ejercicio opcional
-    private static ArrayList<Usuario> listaUsuarios = new ArrayList();
+    private ArrayList<Usuario> listaUsuarios = new ArrayList();
     
     
     // Constructor vacío
@@ -92,8 +92,7 @@ public class Biblioteca {
     
     public void mostrarLibros(){
         
-        System.out.println("Estos son todos los libros que tiene la Biblioteca "
-                + "del Francesc de Borja Moll:");
+        System.out.println("Estos son todos los libros que tiene " + getNombreBiblioteca());
         for(int i=0; i < listaLibros.size(); i++){
             System.out.println(listaLibros.get(i));
         }
@@ -101,8 +100,7 @@ public class Biblioteca {
  
     public void mostrarLibrosDisponibles(){
         
-        System.out.println("Estos son los libros disponibles de la Biblioteca "
-                + "del Francesc de Borja Moll:");
+        System.out.println("Estos son los libros disponibles de " + getNombreBiblioteca());
         for(int i=0; i<listaLibros.size(); i++){
             if(listaLibros.get(i).getNum_copias_disponibles()>0){
                 System.out.println("El libro <<" + listaLibros.get(i).getTitulo() 
@@ -111,7 +109,7 @@ public class Biblioteca {
         }
     }
     
-    public static ArrayList<Libro> reservarLibro(ArrayList<Libro> listaLibros){
+    public ArrayList<Libro> reservarLibro(ArrayList<Libro> listaLibros){
         
         Scanner lector = new Scanner(System.in);
         int i = 0;
