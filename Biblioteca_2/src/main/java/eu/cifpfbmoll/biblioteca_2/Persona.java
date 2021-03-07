@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author asix
  */
-public class Persona {
+public abstract class Persona {
     public static Scanner lector = new Scanner(System.in);
     // Atributos de Persona
     private String nombre;
@@ -146,11 +146,16 @@ public class Persona {
                 listaUsuarios.get(i).getApellido2().equals(apellido2)){
                 listaUsuarios.remove(i);
                 encontrado = true;
-                System.out.println("Usuario encontrado y eliminado. Bye Bye " +nombre);
+                System.out.println("Usuario encontrado y eliminado. Bye Bye " + nombre);
             } 
         }
         if(!encontrado){
             System.out.println("No he encontrado a ese Usuario, porfavor escriba otra vez sus datos.");
         }
     }
+    
+    // Método abstracto, al ponerlo en abstracto, todas las clases hijas deberán añadirlo obligatóriamente.
+    public abstract void cambiarContraseña();
+        
+    
 }

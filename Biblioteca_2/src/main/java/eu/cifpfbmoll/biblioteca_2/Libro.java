@@ -213,10 +213,10 @@ public class Libro {
         System.out.println("Pon el título de un libro y buscaré si lo tengo:");
         String titulo = lectorLibros.nextLine();
         
+        System.out.println("Este es el libro/s que he encontrado:");
         for(int i=0; i < listaLibros.size(); i++){
             if(listaLibros.get(i).getTitulo().contains(titulo)){
                                             //contains = Busca parecidos
-                System.out.println("Este es el libro/s que he encontrado:");
                 System.out.println(listaLibros.get(i).toString());
             }
             else{

@@ -19,21 +19,24 @@ public class Usuario extends Persona{
     private int codigoPostal;
     private String correo;
     private ArrayList<Reserva> listaReservas = new ArrayList();
-    //private int librosReservados;
+    private int librosReservados;
     // Constructor vacío
 
     public Usuario() {
+        this.listaReservas = new ArrayList<Reserva>();
     }
     
     // Constructor con todos los parámetros, incluidos los de Persona
 
     public Usuario(int telefono, String direccion, int codigoPostal, String correo, String nombre, String apellido1, String apellido2, int edad, ArrayList<Reserva> listaReservas) {
         super(nombre, apellido1, apellido2, edad);
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.codigoPostal = codigoPostal;
-        this.correo = correo;
-        this.listaReservas = listaReservas;
+        this.setTelefono(telefono);
+        this.setDireccion(direccion);
+        this.setCodigoPostal(codigoPostal);
+        this.setCorreo(correo);
+        this.setListaReservas(listaReservas);
+        this.setLibrosReservados(librosReservados);
+        
     }
     
     
@@ -44,6 +47,7 @@ public class Usuario extends Persona{
        this.setCodigoPostal(copiaUsuario.getCodigoPostal());
        this.setCorreo(copiaUsuario.getCorreo());
        this.setListaReservas(copiaUsuario.getListaReservas());
+       this.setLibrosReservados(copiaUsuario.getLibrosReservados());
     }
     
     // Getters / Setters
@@ -87,6 +91,15 @@ public class Usuario extends Persona{
     public void setListaReservas(ArrayList<Reserva> listaReservas) {
         this.listaReservas = listaReservas;
     }
+
+    public int getLibrosReservados() {
+        return librosReservados;
+    }
+
+    public void setLibrosReservados(int librosReservados) {
+        this.librosReservados = librosReservados;
+    }
+    
     
     // To String
     
@@ -156,14 +169,38 @@ public class Usuario extends Persona{
         for(int i=0; i<listaUsuarios.size(); i++){
             System.out.println(listaUsuarios.get(i));
         }
+    }  
+
+    public void mostrarLibrosReservados(){
+        for(int i=0; i<this.getListaReservas().size(); i++){
+            this.getListaReservas().get(i).mostrarInfoChula();
+        }
     }
     
-    
-    
-    
-    
-    
-    
-    
+    @Override
+    public void cambiarContraseña() {
+        System.out.println("Quieres cambiar tu número de teléfono o tu correo?");
+        System.out.println("                 1.Teléfono"                       );
+        System.out.println("                 2.Correo"                         );
+        byte opcion = lector.nextByte();
+        
+        switch (opcion) {
+            case 1:
+                System.out.println("Escribe tu nuevo teléfono:");
+                this.setTelefono(lector.nextInt());
+                lector.nextLine();
+                System.out.println("Teléfono actualizado con éxito.");
+                break;
+            case 2:
+                System.out.println("Pon tu nuevo correo:");
+                this.setCorreo(lector.nextLine());
+                System.out.println("Correo actualizado con éxito");
+                break;
+            default:
+                System.out.println("Pon una opcion correcta:");
+                opcion = lector.nextByte();
+                break;
+        }
+    }
     
 }

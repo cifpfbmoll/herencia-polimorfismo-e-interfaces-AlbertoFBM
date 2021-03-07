@@ -126,4 +126,11 @@ public class Bibliotecario extends Persona{
             System.out.println(listaPersonal.get(i));
         }
     }
+
+    @Override
+    public void cambiarContraseña() {
+        System.out.println("Escribe tu nueva contraseña como Administrador:");
+        this.setContraseña(lector.nextLine());
+        System.out.println("Contraseña actualizada con éxito.");
+    }
 }
