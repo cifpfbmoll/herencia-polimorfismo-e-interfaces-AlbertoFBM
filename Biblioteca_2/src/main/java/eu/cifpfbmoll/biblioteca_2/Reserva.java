@@ -5,11 +5,13 @@
  */
 package eu.cifpfbmoll.biblioteca_2;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -20,18 +22,20 @@ public class Reserva implements Material{
     public static Scanner lector = new Scanner(System.in);
     // Atributos de Reserva
     private Libro libro;
-    private String fechaReserva;
+    private String fechaReserva = new String();
     private String horaReserva;
+    private String fechaDevolucion;
 
     // Constructor vacío
     public Reserva() {
     }
 
     // Constructor con todos los parámetros
-    public Reserva(Libro libro, String fechaReserva, String horaReserva) {
+    public Reserva(Libro libro, String fechaReserva, String horaReserva, String fechaDevolucion) {
         this.setLibro(libro);
         this.setFechaReserva(fechaReserva);
         this.setHoraReserva(horaReserva);
+        this.setFechaDevolucion(fechaDevolucion);
     }
     
     // Constructor copia
@@ -39,6 +43,7 @@ public class Reserva implements Material{
         this.setLibro(Reserva_01.getLibro());
         this.setFechaReserva(Reserva_01.getFechaReserva());
         this.setHoraReserva(Reserva_01.getHoraReserva());
+        this.setFechaDevolucion(Reserva_01.getFechaDevolucion());
     }
     
     // Getters / Setters
@@ -64,6 +69,14 @@ public class Reserva implements Material{
 
     public void setHoraReserva(String horaReserva) {
         this.horaReserva = horaReserva;
+    }
+
+    public String getFechaDevolucion() {
+        return fechaDevolucion;
+    }
+
+    public void setFechaDevolucion(String fechaDevolucion) {
+        this.fechaDevolucion = fechaDevolucion;
     }
 
     
@@ -102,17 +115,7 @@ public class Reserva implements Material{
                                 libroEncontrado = true;
                                 // Ahora vamos a ver si hay libros disponibles
                                 if(listaLibros.get(j).getNum_copias_disponibles()>=1){
-                                    Libro libro = new Libro(listaLibros.get(j));
-                                    LocalDateTime fecha= LocalDateTime.now();
-                                    DateTimeFormatter formatoFecha=DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                                    DateTimeFormatter formatoHora=DateTimeFormatter.ofPattern("HH:mm");
-                                    Reserva reserva = new Reserva(libro, fecha.format(formatoFecha),fecha.format(formatoHora));
-                                    // Vamos a añadir la reserva a la Lista de Reservas
-                                    ((Usuario)listaUsuarios.get(i)).getListaReservas().add(reserva);
-                                    // Vamos a restar un libro a la lista de Libros y sumar uno a la lista de Reservas
-                                    listaLibros.get(j).setNum_copias_disponibles(listaLibros.get(j).getNum_copias_disponibles()-1);
-                                    ((Usuario)listaUsuarios.get(i)).setLibrosReservados(((Usuario)listaUsuarios.get(i)).getLibrosReservados()+1);
-                                    System.out.println("Reserva realizada con éxito");
+                                    hacerReserva(listaLibros, i, listaUsuarios, j);
                                 }else{
                                     System.out.println("Lo siento, no hay copias disponibles de este libro en este momento.");
                                 }
@@ -131,6 +134,24 @@ public class Reserva implements Material{
         if(!personaEncontrada){
             System.out.println("No hemos encontrado dicho Usuario, porfavor vuelva a escribir los datos.");
         }
+    }
+
+    public static void hacerReserva(ArrayList<Libro> listaLibros, int i, ArrayList<Usuario> listaUsuarios, int j) {
+        Reserva reserva_01 = new Reserva();
+        reserva_01.setLibro(listaLibros.get(i));
+        
+        reserva_01.setFechaReserva(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        DateTimeFormatter horasYMinutos = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime horaLocal = LocalDateTime.now();
+        reserva_01.setHoraReserva(horasYMinutos.format(horaLocal));
+        
+        reserva_01.obtenerFechaDevolución();
+        // Vamos a añadir la reserva a la Lista de Reservas
+        ((Usuario)listaUsuarios.get(i)).getListaReservas().add(reserva_01);
+        // Vamos a restar un libro a la lista de Libros y sumar uno a la lista de Reservas
+        listaLibros.get(j).setNum_copias_disponibles(listaLibros.get(j).getNum_copias_disponibles()-1);
+        ((Usuario)listaUsuarios.get(i)).setLibrosReservados(((Usuario)listaUsuarios.get(i)).getLibrosReservados()+1);
+        System.out.println("Reserva realizada con éxito");
     }
     
     public static void devolverLibro(ArrayList<Libro> listaLibros, ArrayList<Usuario> listaUsuarios){
@@ -196,14 +217,10 @@ public class Reserva implements Material{
     
     // Estos son los dos métodos abstractos de la interfaz Material 
     @Override
-    public void obtenerFechaDevolución() {
-        if(this.getLibro() instanceof Libro){
-            String fechaReserva = this.getFechaReserva();
-            DateTimeFormatter formatoFecha=DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate fechaReservaDate= LocalDate.parse(fechaReserva,formatoFecha);
-            LocalDate fechaDevolucion=fechaReservaDate.plusMonths(1);
-            System.out.println("        Tienes que devolver el libro el día: "+fechaDevolucion.format(formatoFecha));
-        }
+    public LocalDate obtenerFechaDevolución() {
+        LocalDate fechaDevolucion = LocalDate.now().plusMonths(1);
+        this.fechaDevolucion = fechaDevolucion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return fechaDevolucion;
     }
 
     @Override
@@ -218,7 +235,7 @@ public class Reserva implements Material{
          System.out.println("            Fecha: "+ this.getFechaReserva());
          System.out.println("            Hora: "+ this.getHoraReserva());
          System.out.println("-----------------------------------------------------");
-         this.obtenerFechaDevolución();
+         System.out.println("         Fecha devolución: " + this.getFechaDevolucion());
          System.out.println("-----------------------------------------------------");
     }
 }

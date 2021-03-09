@@ -5,13 +5,15 @@
  */
 package eu.cifpfbmoll.biblioteca_2;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Alberto y Jose
  */
 public interface Material{
     
-    public void obtenerFechaDevolución();
+    public LocalDate obtenerFechaDevolución();
     
     public void mostrarInfoChula();
 }

@@ -183,9 +183,13 @@ public class Main {
                     Reserva.devolverLibro(biblioteca.getListaLibros(), biblioteca.getListaUsuarios());
                     break;
                 case 9:
-                    U1.mostrarLibrosReservados();
+                    for(int i=0; i<biblioteca.getListaUsuarios().size(); i++){
+                        biblioteca.getListaUsuarios().get(i).mostrarLibrosReservados();
+                    }
+                    break;
                 case 10:
                     menuAdministrador(biblioteca, U1);
+                    break;
                 default:
                     System.out.println("Pon una opción correcta:");
                     opcion = lector.nextByte();
@@ -249,7 +253,7 @@ public class Main {
             switch (opcion) {
                 case 1:
                     U1.solicitarDatosPersona();
-                    biblioteca.getListaPersonal().add(U1);
+                    biblioteca.getListaUsuarios().add(U1);
                     break;
                 case 2:
                     Persona.eliminarUsuario(biblioteca.getListaUsuarios());

@@ -173,7 +173,7 @@ public class Usuario extends Persona{
 
     public void mostrarLibrosReservados(){
         for(int i=0; i<this.getListaReservas().size(); i++){
-            this.getListaReservas().get(i).mostrarInfoChula();
+            this.getListaReservas().get(i);
         }
     }
     
